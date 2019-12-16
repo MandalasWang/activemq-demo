@@ -1,0 +1,18 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.97.188.93:8761/eureka/
+server:
+  port: 8099
+  servlet:
+    context-path: /amq
+spring:
+  activemq:
+    broker-url: tcp://47.97.188.93:61616
+    password: admin
+    pool:
+      enabled: true
+      max-connections: 100
+    user: admin
+  application:
+    name: amq-server
