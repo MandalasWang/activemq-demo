@@ -1,15 +1,15 @@
 package ink.boyuan.activemqdemo.controller;
 
+import ink.boyuan.activemqdemo.model.MyTopic;
 import ink.boyuan.activemqdemo.service.ProductService;
 import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.jms.Destination;
 import javax.jms.Queue;
+import javax.jms.Topic;
 
 /**
  * @author wyy
@@ -18,13 +18,13 @@ import javax.jms.Queue;
  * @description
  **/
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "")
 public class DemoController {
 
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(path = "test")
+    @RequestMapping(path = "/test")
     public String sendMsg(@RequestParam String msg){
         Queue queue = new ActiveMQQueue();
         Destination destination = ((ActiveMQQueue) queue).createDestination("demo.queue");
@@ -32,6 +32,11 @@ public class DemoController {
         return "success";
     }
 
+    @RequestMapping(value = "/topic")
+    public String sendTopic(@RequestBody MyTopic topic){
+        Topic mqTopic = new ActiveMQTopic("demo.topic");
+       return productService.sendTopic(mqTopic,topic);
+    }
 
 
 }

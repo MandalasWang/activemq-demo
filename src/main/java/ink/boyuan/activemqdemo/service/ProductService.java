@@ -1,7 +1,10 @@
 package ink.boyuan.activemqdemo.service;
 
 
+import ink.boyuan.activemqdemo.model.MyTopic;
+
 import javax.jms.Destination;
+import javax.jms.Topic;
 
 /**
  * @author 有缘
@@ -22,4 +25,12 @@ public interface ProductService {
      * @param msg
      */
      void sendMessage(String msg);
+
+    /**
+     * 发布订阅
+     * @param mqTopic
+     * @param topic
+     * @return
+     */
+     String sendTopic(Topic mqTopic,MyTopic topic);
 }
