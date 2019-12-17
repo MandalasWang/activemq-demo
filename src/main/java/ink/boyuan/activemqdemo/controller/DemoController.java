@@ -1,5 +1,8 @@
 package ink.boyuan.activemqdemo.controller;
 
+import ink.boyuan.activemqdemo.api.SendAmqInterface;
+import ink.boyuan.activemqdemo.common.RetResponse;
+import ink.boyuan.activemqdemo.common.RetResult;
 import ink.boyuan.activemqdemo.model.MyTopic;
 import ink.boyuan.activemqdemo.service.ProductService;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -18,25 +21,27 @@ import javax.jms.Topic;
  * @description
  **/
 @RestController
-@RequestMapping(value = "")
-public class DemoController {
+@RequestMapping(value = "/product")
+public class DemoController implements SendAmqInterface {
 
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(path = "/test")
-    public String sendMsg(@RequestParam String msg){
+    @Override
+    @RequestMapping(path = "/sendQue")
+    public RetResult<Object> sendMsg(@RequestParam String msg,String name){
         Queue queue = new ActiveMQQueue();
-        Destination destination = ((ActiveMQQueue) queue).createDestination("demo.queue");
+        Destination destination = ((ActiveMQQueue) queue).createDestination(name);
         productService.sendMessage(destination,msg);
-        return "success";
+        return RetResponse.makeOKRsp(name);
     }
 
-    @RequestMapping(value = "/topic")
-    public String sendTopic(@RequestBody String topic){
-        Topic mqTopic = new ActiveMQTopic("demo.topic");
+    @Override
+    @RequestMapping(value = "/sendTopic")
+    public RetResult sendTopic(@RequestBody String topic,String name){
+        Topic mqTopic = new ActiveMQTopic(name);
         productService.sendTopic(mqTopic,topic);
-        return "success";
+        return RetResponse.makeOKRsp(name);
     }
 
 
