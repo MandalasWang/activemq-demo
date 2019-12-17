@@ -33,9 +33,10 @@ public class DemoController {
     }
 
     @RequestMapping(value = "/topic")
-    public String sendTopic(@RequestBody MyTopic topic){
+    public String sendTopic(@RequestBody String topic){
         Topic mqTopic = new ActiveMQTopic("demo.topic");
-       return productService.sendTopic(mqTopic,topic);
+        productService.sendTopic(mqTopic,topic);
+        return "success";
     }
 
 

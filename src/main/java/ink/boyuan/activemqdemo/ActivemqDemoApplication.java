@@ -10,8 +10,10 @@ import org.springframework.jms.core.JmsMessagingTemplate;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
-import javax.jms.Topic;
 
+/**
+ * @author wyy
+ */
 @SpringBootApplication
 @EnableJms
 public class ActivemqDemoApplication {
@@ -29,14 +31,15 @@ public class ActivemqDemoApplication {
         return new ActiveMQQueue("common.queue");
     }
 
-    @Bean  //springboot 会自动注入线程池  所以不需要手动注入
+    /**
+     * springboot 会自动注入线程池  所以不需要手动注入
+     * @param connectionFactory
+     * @return
+     */
+    @Bean
     public JmsMessagingTemplate generateJmsTemplate(ConnectionFactory connectionFactory){
         return new JmsMessagingTemplate(connectionFactory);
     }
 
 
-    @Bean
-    public Topic topic(){
-        return new ActiveMQTopic("common.topic");
-    }
 }

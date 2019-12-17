@@ -25,8 +25,6 @@ public class ProductServiceImpl implements ProductService {
      */
     @Autowired
     private JmsMessagingTemplate jmsTemplate;
-    @Autowired
-    private JmsTemplate jmsTemplate1;
 
     @Autowired
     private Queue queue;
@@ -43,8 +41,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String sendTopic(Topic mqTopic,MyTopic topic) {
-        jmsTemplate.convertAndSend(mqTopic,topic.getContent());
-        return "success";
+    public void sendTopic(Topic mqTopic,String topic) {
+        for(int i=0;i<5;i++){
+            jmsTemplate.convertAndSend(mqTopic,topic);
+        }
     }
 }

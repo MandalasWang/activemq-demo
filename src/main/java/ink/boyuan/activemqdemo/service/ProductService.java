@@ -32,5 +32,5 @@ public interface ProductService {
      * @param topic
      * @return
      */
-     String sendTopic(Topic mqTopic,MyTopic topic);
+     void sendTopic(Topic mqTopic,String topic);
 }
