@@ -42,8 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void sendTopic(Topic mqTopic,String topic) {
-        for(int i=0;i<5;i++){
-            jmsTemplate.convertAndSend(mqTopic,topic);
-        }
+        jmsTemplate.convertAndSend(mqTopic,topic);
+
     }
 }

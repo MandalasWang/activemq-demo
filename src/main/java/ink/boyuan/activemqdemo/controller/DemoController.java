@@ -3,7 +3,6 @@ package ink.boyuan.activemqdemo.controller;
 import ink.boyuan.activemqdemo.api.SendAmqInterface;
 import ink.boyuan.activemqdemo.common.RetResponse;
 import ink.boyuan.activemqdemo.common.RetResult;
-import ink.boyuan.activemqdemo.model.MyTopic;
 import ink.boyuan.activemqdemo.service.ProductService;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jms.Destination;
+import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.Topic;
 
@@ -29,7 +29,7 @@ public class DemoController implements SendAmqInterface {
 
     @Override
     @RequestMapping(path = "/sendQue")
-    public RetResult<Object> sendMsg(@RequestParam String msg,String name){
+    public RetResult<Object> sendMsg(@RequestParam(value = "msg") String msg,@RequestParam(value = "name") String name){
         Queue queue = new ActiveMQQueue();
         Destination destination = ((ActiveMQQueue) queue).createDestination(name);
         productService.sendMessage(destination,msg);
@@ -38,10 +38,10 @@ public class DemoController implements SendAmqInterface {
 
     @Override
     @RequestMapping(value = "/sendTopic")
-    public RetResult sendTopic(@RequestBody String topic,String name){
-        Topic mqTopic = new ActiveMQTopic(name);
+    public RetResult sendTopic(@RequestBody String topic) throws JMSException {
+        Topic mqTopic = new ActiveMQTopic("demo.topic");
         productService.sendTopic(mqTopic,topic);
-        return RetResponse.makeOKRsp(name);
+        return RetResponse.makeOKRsp(mqTopic.getTopicName());
     }
 
 

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.jms.JMSException;
 
 
 /**
@@ -31,5 +32,5 @@ public interface SendAmqInterface {
      * @return
      */
     @RequestMapping(value = "/amq/product/sendTopic",method = RequestMethod.GET)
-    public RetResult sendTopic(@RequestBody String topic,@RequestParam(value = "name") String name);
+    public RetResult sendTopic(@RequestBody String topic)throws JMSException;
 }

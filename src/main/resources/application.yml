@@ -16,3 +16,4 @@ spring:
     user: admin
   application:
     name: amq-server
+

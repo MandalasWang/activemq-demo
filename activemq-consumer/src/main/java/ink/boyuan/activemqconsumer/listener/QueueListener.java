@@ -12,7 +12,11 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class QueueListener {
-
+    /**
+     * 消费demo.queue队列里面的消息 并输出到out.queue
+     * @param text
+     * @return
+     */
     @JmsListener(destination = "demo.queue", containerFactory = "jmsListenerContainerQueue")
     @SendTo("out.queue")
     public String receive(String text){

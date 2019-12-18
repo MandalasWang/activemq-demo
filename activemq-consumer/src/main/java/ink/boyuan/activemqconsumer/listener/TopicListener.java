@@ -19,4 +19,9 @@ public class TopicListener {
     public void receive(String text){
         System.out.println("TopicListener: consumer-a 收到一条信息: " + text);
     }
+    @JmsListener(destination = "demo.topic", containerFactory = "jmsListenerContainerTopic")
+    public void receive1(String text){
+        System.out.println("TopicListener: consumer-a 收到一条信息: " + text);
+    }
+
 }
